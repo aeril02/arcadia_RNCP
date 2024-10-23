@@ -9,10 +9,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
-    <link rel="stylesheet" href=".../source/css/style.css">
-    <script src=".../source/js/script.js" defer></script>
+    <link rel="stylesheet" href="../source/css/style.css">
+    <script src="../source/js/header.js" defer></script>
 </head>
 <body>
-    <?php include '../source/PHP/header.php'; ?>
+    <header>
+        <nav>
+            <ul id="menu"></ul>
+        </nav>
+    </header>
 </body>
 </html>

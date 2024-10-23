@@ -1,0 +1,120 @@
+
+/*remplacer certain js a la place de CSS 
++ remplacer formulaire 
++ verifier urf 8 de tout les document */
+
+
+/* ps : Cest moche tout a changer ou lisser */
+/* non verification de la responsivité */ 
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url('../photo/background.jpg'); /* Couleur de fond douce */
+    color: #333;
+}
+
+
+header {
+    background-image: url('../photo/border.png.jpg'); /* Couleur de fond, vous pouvez ajuster */
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+nav ul li {
+    margin: 0 15px; 
+}
+
+nav ul li img {
+    height: 50px; 
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+nav {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+}
+
+nav a:hover {
+    color: #2d8659; 
+    border-bottom: 2px solid #2d8659;
+}
+
+
+.container {
+    text-align: center;
+    padding: 100px 0;
+    background-image: url('image-de-fond.jpg'); 
+    background-size: cover;
+    background-position: center;
+}
+
+.container h1 {
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+
+.commentaires {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: rgba(45, 134, 89, 0.1);
+}
+
+.commentaires div {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+}
+
+.commentaires div:hover {
+    background-color: rgba(45, 134, 89, 0.2);
+}
+
+
+footer {
+    background-image: url('../photo/border.png.jpg');;
+    color: #000000;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #000000;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

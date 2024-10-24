@@ -24,9 +24,8 @@
     <main>
         <h1 id="tittleIndex">Presentation du ZOO </h1>
         <section id ="presentationZooIndex">
-            <p>TXT TXT TXT </p>
+            <?php include "../source/php/presentation_Zoo.php"; ?>
         </section>
-  
     </main>
 
     <aside>

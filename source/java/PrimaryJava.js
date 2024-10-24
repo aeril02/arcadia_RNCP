@@ -1,7 +1,6 @@
 // header pour les page du site 
 // creation d'un array pour la creation du menu
 const menuItems = [
-    {src : "photo/logo_arcadia.webp", alt: "logo arcadia"},
     {href: "../../page/index.php", label: "Accueil"},
     {href: "../../page/service.php", label: "Services"},
     {href: "../../page/habitats.php", label: "Habitats"},
@@ -12,6 +11,16 @@ const currentPath = window.location.pathname;
 
 // creation de la boucle for pour l'affichage du menu 
 const menu = document.getElementById("header");
+
+// rajout du logo 
+const logo = document.createElement("img");
+// attention le lien doit etre fait en fonction de index.php par de PrimaryJava.js
+logo.src ="../doc/photo/image_site/logo_arcadia_WEBP.webp";
+logo.alt ="logo_du_site";
+logo.classList.add("logoArcadia");
+menu.appendChild(logo);
+
+
 menuItems.forEach(item => {
     const li = document.createElement("li");
     const a = document.createElement("a");
@@ -36,6 +45,8 @@ const footerItems = [
     {href: "../../page/recrutement.html", label: "Recrutement"},
     {href: "../../page/login.php", label: "Connexion"},
 ]
+
+// creation de la boucle for pour l'affichage du menu
 const footer = document.getElementById("footer");
 footerItems.forEach(item => {
     const li = document.createElement("li");

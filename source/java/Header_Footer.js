@@ -14,7 +14,7 @@ const menu = document.getElementById("header");
 
 // rajout du logo 
 const logo = document.createElement("img");
-// attention le lien doit etre fait en fonction de index.php par de PrimaryJava.js
+// attention le lien doit etre fait en fonction de index.php par de Header_Footer.js
 logo.src ="../doc/photo/image_site/logo_arcadia_WEBP.webp";
 logo.alt ="logo_du_site";
 logo.classList.add("logoArcadia");

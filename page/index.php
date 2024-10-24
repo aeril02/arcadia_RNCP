@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
     <link rel="stylesheet" href="../source/css/style.css">
-    <script src="../source/java/PrimaryJava.js" defer></script>
+    <script src="../source/java/Header_Footer.js" defer></script>
+    <script src="../source/java/comment_Zoo.js" defer></script>
 
 </head>
 <body>
@@ -30,11 +31,10 @@
     <aside>
         <h2 id = "H2ComZooIndex">laisser un avis sur notre ZOO </h2>
         <div id="commentZooIndex">
-            <
+            <nav>
+              <ul id ="commentairesIndex"></ul>
+            </nav>
         </div>
-        <nav>
-            <ul id ="commentairesIndex"></ul>
-        </nav>
     </aside>
     
     <footer>

@@ -1,6 +1,6 @@
 <?php
 
-require '../vendor/autoload.php';
+require '../vendor/autoload.php'; // le lien fonctionne car il prend en source de depart index.php
 
 $mongo = new MongoDB\Client("mongodb://localhost:27017");
 $collection = $mongo->Arcadia->presentationsZoo;

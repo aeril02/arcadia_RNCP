@@ -1,6 +1,9 @@
 <?php
-require '../vendor/autoload.php';
 
+header('Content-Type: application/json');
+
+require '../../vendor/autoload.php';// le lien fonctionne car il prend en source de depart comment_Zoo.js ( theorie a valider)
+try{
 $mongo = new MongoDB\Client("mongodb://localhost:27017");
 $collection = $mongo->Arcadia->commentairesZoo;
 
@@ -12,11 +15,19 @@ $commentairesZoo = $collection->find(
         'limit' => 3
     ]);
 
-foreach ($commentairesZoo as $commentaire) {
-    echo '<div id="commentZooIndex">';
-    echo '<h3>' . $commentaire['nom'] . '</h3>';
-    echo '<p>' . $commentaire['date'] . '</p>';
-    echo '<p>' . $commentaire['texte'] . '</p>';
-    echo '</div>';
+    $commentaires = []; //creation en tableau pour l'envoie en JS 
+    foreach ($commentairesZoo as $commentaire) {
+        $commentaires[] = [
+            'nom' => $commentaire['pseudo'],
+            'texte' => $commentaire['avis'],
+        ];
+    }
+    // envoyer les commentaires en JS
+    echo json_encode($commentaires);
+}
+catch(Exception $e){
+    echo json_encode([
+        'error' => $e->getMessage()
+    ]);
 }
 ?>

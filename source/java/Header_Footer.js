@@ -23,7 +23,9 @@ menu.appendChild(logo);
 
 menuItems.forEach(item => {
     const li = document.createElement("li");
+    li.classList.add("navHeader");
     const a = document.createElement("a");
+    a.classList.add("texteHeader");
     a.href = item.href;
     a.textContent = item.label;
 
@@ -50,7 +52,9 @@ const footerItems = [
 const footer = document.getElementById("footer");
 footerItems.forEach(item => {
     const li = document.createElement("li");
+    li.classList.add("navFooter");
     const a = document.createElement("a");
+    a.classList.add("texteFooter");
     a.href = item.href;
     a.textContent = item.label;
     li.appendChild(a);

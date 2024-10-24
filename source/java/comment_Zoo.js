@@ -6,21 +6,18 @@ fetch(url)  // Faire une requête HTTP pour recharger les commentaires
         const commentDiv = document.getElementById("commentairesIndex");
         data.forEach(item => {
             const commentBlock = document.createElement("li");
-
+            commentBlock.add("commentIndex");
             // Créer les éléments pour chaque champ du commentaire
             const name = document.createElement("h3");
             name.textContent = item.nom;
-
-            const date = document.createElement("p");
-            const optionDate = { year: 'numeric', month: 'long', day: 'numeric' };
-            date.textContent = new Date(item.date).toLocaleDateString('fr-FR', optionDate); // Afficher la date
+            name.classList.add("commentIndexName");
 
             const texte = document.createElement("p");
             texte.textContent = item.texte;
-
+            texte.classList.add("commentIndexTexte");
+            
             // Ajouter les éléments au div commentBlock
             commentBlock.appendChild(name);
-            commentBlock.appendChild(date);
             commentBlock.appendChild(texte);
 
             // Ajouter le div commentBlock à l'élément "comment"

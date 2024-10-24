@@ -2,7 +2,6 @@
   include "../config/db_config.php";
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +30,7 @@
     <aside>
         <h2 id = "H2ComZooIndex">laisser un avis sur notre ZOO </h2>
         <div id="commentZooIndex">
-            <p>  TXT TXT TXT </p>
+            <
         </div>
         <nav>
             <ul id ="commentairesIndex"></ul>

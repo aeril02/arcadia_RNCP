@@ -9,13 +9,11 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-image: url('../photo/background.jpg'); /* Couleur de fond douce */
     color: #333;
 }
 
 
 header {
-    background-image: url('../photo/border.png.jpg'); /* Couleur de fond, vous pouvez ajuster */
     padding: 10px;
 }
 

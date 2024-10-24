@@ -7,6 +7,7 @@ fetch(url)  // Faire une requête HTTP pour recharger les commentaires
         data.forEach(item => {
             const commentBlock = document.createElement("li");
             commentBlock.classList.add("commentIndex");
+            
             // Créer les éléments pour chaque champ du commentaire
             const name = document.createElement("h3");
             name.textContent = item.nom;

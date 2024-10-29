@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 17 sep. 2024 à 18:50
+-- Généré le : mar. 29 oct. 2024 à 11:43
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -27,7 +27,6 @@ SET time_zone = "+00:00";
 -- Structure de la table `animal`
 --
 
-/* manque photo animal + habitat , use blob or dans le fichier photo ? preference ( blob)*/;
 CREATE TABLE `animal` (
   `animal_id` int(11) NOT NULL,
   `prenom` varchar(50) DEFAULT NULL,
@@ -35,23 +34,8 @@ CREATE TABLE `animal` (
   `email` varchar(25) NOT NULL,
   `race_id` int(11) DEFAULT NULL,
   `habitat_id` int(11) DEFAULT NULL,
-  `image` blob DEFAULT NULL
+  `image` longblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Déchargement des données de la table `animal`
---
-
-INSERT INTO `animal` (`animal_id`, `prenom`, `etat`, `email`, `race_id`, `habitat_id`, `image`) VALUES
-(4, 'Lion', 'En bonne santé', '', 1, 1, NULL),
-(5, 'Éléphant', 'En bonne santé', '', 2, 1, NULL),
-(6, 'Zèbre', 'En bonne santé', '', 3, 1, NULL),
-(7, 'Crocodile', 'En bonne santé', '', 7, 2, NULL),
-(8, 'Grenouille', 'En bonne santé', '', 8, 2, NULL),
-(9, 'Serpent', 'En bonne santé', '', 9, 2, NULL),
-(10, 'Croa', 'en bonne santé', '', 1, 3, NULL),
-(11, 'Lutra', 'en bonne santé', '', 2, 3, NULL),
-(12, 'grenouille bleu', 'en bonne santé', '', 2, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -63,17 +47,9 @@ CREATE TABLE `habitat` (
   `habitat_id` int(11) NOT NULL,
   `nom` varchar(50) DEFAULT NULL,
   `description` varchar(50) DEFAULT NULL,
-  `commentaire_habitat` varchar(50) DEFAULT NULL
+  `commentaire_habitat` varchar(50) DEFAULT NULL,
+  `photo` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Déchargement des données de la table `habitat`
---
-
-INSERT INTO `habitat` (`habitat_id`, `nom`, `description`, `commentaire_habitat`) VALUES
-(1, 'Savane', 'Habitat sec avec de vastes plaines herbeuses', 'Habitat pour les animaux de la savane'),
-(2, 'Jungle', 'Habitat dense avec une végétation tropicale', 'Habitat pour les animaux de la jungle'),
-(3, 'Marais', 'Zone humide avec de l\'eau stagnante', 'Habitat pour les animaux du marais');
 
 -- --------------------------------------------------------
 
@@ -97,21 +73,6 @@ CREATE TABLE `race` (
   `race_id` int(11) NOT NULL,
   `label` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Déchargement des données de la table `race`
---
-
-INSERT INTO `race` (`race_id`, `label`) VALUES
-(1, 'Lion'),
-(2, 'Éléphant'),
-(3, 'Zèbre'),
-(4, 'Tigre'),
-(5, 'Singe'),
-(6, 'Panthère'),
-(7, 'Crocodile'),
-(8, 'Grenouille'),
-(9, 'Serpent');
 
 -- --------------------------------------------------------
 
@@ -152,16 +113,7 @@ CREATE TABLE `service` (
   `service_id` int(11) NOT NULL,
   `nom` varchar(50) DEFAULT NULL,
   `description` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Déchargement des données de la table `service`
---
-
-INSERT INTO `service` (`service_id`, `nom`, `description`) VALUES
-(1, 'Restauration', 'venez manger les nombreux met du parc'),
-(2, 'Visite guidée des habitats', 'nos employé vous feront un plaisr de vous emmener '),
-(3, 'Visite du zoo en petit train', 'le petit train vous emmeneras dans tout les habita');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -242,13 +194,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `animal`
 --
 ALTER TABLE `animal`
-  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `habitat`
 --
 ALTER TABLE `habitat`
-  MODIFY `habitat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `habitat_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `image`
@@ -260,7 +212,7 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT pour la table `race`
 --
 ALTER TABLE `race`
-  MODIFY `race_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `race_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `rapport_veterinaire`
@@ -278,7 +230,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `service`
 --
 ALTER TABLE `service`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées

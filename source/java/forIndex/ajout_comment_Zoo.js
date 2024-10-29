@@ -7,7 +7,7 @@
     const avis = document.getElementById('commentaireComZooIndex').value;
 
     // Envoi des données via fetch en POST
-    fetch('../source/php/ajout_comment_Zoo.php', {
+    fetch('../source/php/forIndex/ajout_comment_Zoo.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

@@ -10,8 +10,8 @@
     <title>Index</title>
     <link rel="stylesheet" href="../source/css/style.css">
     <script src="../source/java/Header_Footer.js" defer></script>
-    <script src="../source/java/comment_Zoo.js" defer></script>
-    <script src="../source/java/ajout_Comment_Zoo.js" defer></script>
+    <script src="../source/java//forIndex/comment_Zoo.js" defer></script>
+    <script src="../source/java/forIndex/ajout_comment_Zoo.js" defer></script>
 
 </head>
 <body>
@@ -26,7 +26,7 @@
     <main>
         <h1 id="tittleIndex">Presentation du ZOO </h1>
         <section id ="presentationZooIndex">
-            <?php include "../source/php/presentation_Zoo.php"; ?>
+            <?php include "../source/php/forIndex/presentation_Zoo.php"; ?>
         </section>
     </main>
 

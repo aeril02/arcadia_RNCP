@@ -1,10 +1,10 @@
 // header pour les page du site 
 // creation d'un array pour la creation du menu
 const menuItems = [
-    {href: "../../page/index.php", label: "Accueil"},
-    {href: "../../page/service.php", label: "Services"},
-    {href: "../../page/habitats.php", label: "Habitats"},
-    {href: "../../page/contact.php", label: "Contact"},
+    {href: "index.php", label: "Accueil"},
+    {href: "service.php", label: "Services"},
+    {href: "habitats.php", label: "Habitats"},
+    {href: "contact.php", label: "Contact"},
 ]
 // recuperer le chemin actuel
 const currentPath = window.location.pathname;

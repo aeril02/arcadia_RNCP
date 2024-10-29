@@ -1,4 +1,4 @@
-const url = "../source/php/comment_Zoo.php"; // Chemin correct vers le fichier PHP
+const url = "../source/php/forIndex/comment_Zoo.php"; // Chemin correct vers le fichier PHP
 
 fetch(url)  // Faire une requête HTTP pour recharger les commentaires
     .then(response => response.json())  // tester si la requete est correct

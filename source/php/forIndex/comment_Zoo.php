@@ -2,7 +2,7 @@
 
 header('Content-Type: application/json');
 
-require '../../vendor/autoload.php';// le lien fonctionne car il prend en source de depart comment_Zoo.js ( theorie a valider)
+require '../../../vendor/autoload.php';// le lien fonctionne car il prend en source de depart comment_Zoo.js
 try{
 $mongo = new MongoDB\Client("mongodb://localhost:27017");
 $collection = $mongo->Arcadia->commentairesZoo;

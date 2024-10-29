@@ -59,17 +59,17 @@ $conn = null;
                         <img src="data:image/webp;base64,<?php echo $habitat['photo']; ?>" alt="Image de <?php echo htmlspecialchars($habitat['nom']); ?>">
                         <figcaption><?php echo htmlspecialchars($habitat['description']); ?></figcaption>
                 </figure>
-                <section class="boutonAnimaux">
+                <aside class="boutonAnimaux">
                     <?php foreach ($habitat['animaux'] as $animal): ?>
-                        <div class="animal">
+                        <bouton class="animal">
                             <p><strong><?php echo htmlspecialchars($animal['prenom']); ?></strong></p>
                             <p>État: <?php echo htmlspecialchars($animal['etat']); ?></p>
                             <?php if ($animal['image']): ?>
                                 <img src="data:image/webp;base64,<?php echo $animal['image']; ?>" alt="Image de <?php echo htmlspecialchars($animal['prenom']); ?>">
                             <?php endif; ?>
-                        </div>
+                        </bouton>
                     <?php endforeach; ?>
-                </section>
+                </aside>
             </aside>
 
             <section class="commentaireHabitat">

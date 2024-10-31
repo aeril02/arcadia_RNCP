@@ -1,14 +1,3 @@
-<?php
-
-include '../config/db_config.php';
-
-// SQL habitat
-$sql = "SELECT * FROM habitat";
-$statement = $pdo->prepare($sql);
-$statement->execute();
-$habitats = $statement->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>

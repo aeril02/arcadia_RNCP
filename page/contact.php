@@ -1,32 +1,20 @@
-<?php
-//include 'db_config.php';
-//soit en mongo sois en sql, a voir les meileurs celon le besoin .( a faire sur mongo i guess )
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-?>
-
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Contact Page</title>
-</head>
+    <title>Index</title>
+    <link rel="stylesheet" href="../source/css/style.css">
+    <script src="../source/java/Header_Footer.js" defer></script>
+    <script src="../source/java//forIndex/comment_Zoo.js" defer></script>
+    <script src="../source/java/forIndex/ajout_comment_Zoo.js" defer></script>
 <body>
 <header>
         <nav>
-            <ul>
-                <li><img src="photo/logo_arcadia.jpg" alt="logo arcadia"></li>
-                <li><a href="index.php">acceuil</a></li>
-                <li><a href="service.php">Services</a></li>
-                <li><a href="habitats.php">Habitats</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a href="login.php">Connexion</a></li>
-            </ul>
+            <ul id="header"></ul>
         </nav>
     </header>
+
     <main>
         <!-- non fini .  changer nom balise .  configurer l'action ! -->
         <section>

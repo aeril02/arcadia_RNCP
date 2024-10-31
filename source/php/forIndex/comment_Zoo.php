@@ -3,9 +3,12 @@
 header('Content-Type: application/json');
 
 require '../../../vendor/autoload.php';// le lien fonctionne car il prend en source de depart comment_Zoo.js
+
 try{
-$mongo = new MongoDB\Client("mongodb://localhost:27017");
-$collection = $mongo->Arcadia->commentairesZoo;
+
+    $mongo = new MongoDB\Client("mongodb://localhost:27017");
+
+    $collection = $mongo->Arcadia->commentairesZoo;
 
 // Récupérer les commentaire selection (les 3 plus recent et valider)
 $commentairesZoo = $collection->find( 

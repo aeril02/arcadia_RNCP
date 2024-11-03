@@ -1,4 +1,4 @@
-// header pour les pages du site
+// En-tête pour les pages du site
 const menuItems = [
     { href: "index.php", label: "Accueil" },
     { href: "service.php", label: "Services" },
@@ -31,73 +31,68 @@ menuItems.forEach(item => {
     menu.appendChild(li);
 });
 
-// footer pour les pages du site
+// Pied de page pour les pages du site
 const footerItems = [
-    { href: "../../page/legal.html", label: "Mentions légales" },
-    { href: "../../page/billeterie.php", label: "Billetterie" },
-    { href: "../../page/reglement.php", label: "Règlement interne" },
     { type: "button", id: "openPopupBtn", label: "Contactez-nous" },
-    { href: "../../page/login.php", label: "Connexion" }
+    { type: "button", id: "openConnexionBtn", label: "Connexion" },
 ];
-
 const footer = document.getElementById("footer");
 
-// Création du menu de footer
+// Création du menu de pied de page
 footerItems.forEach(item => {
     const li = document.createElement("li");
     li.classList.add("navFooter");
 
     if (item.type === "button") {
-        // Bouton de contact pour ouvrir le formulaire en pop-up
         const button = document.createElement("button");
         button.id = item.id;
         button.textContent = item.label;
         button.classList.add("texteFooter");
 
-        button.addEventListener("click", function() {
-            document.getElementById("popupForm").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        });
+        if (item.id === "openPopupBtn") {
+            button.addEventListener("click", () => {
+                document.getElementById("contactOverlay").style.display = "block";
+                document.getElementById("contactPopupForm").style.display = "block";
+            });
+        } else if (item.id === "openConnexionBtn") {
+            button.addEventListener("click", () => {
+                document.getElementById("connexionOverlay").style.display = "block";
+                document.getElementById("connexionPopupForm").style.display = "block";
+            });
+        }
 
         li.appendChild(button);
-    } else {
-        const a = document.createElement("a");
-        a.classList.add("texteFooter");
-        a.href = item.href;
-        a.textContent = item.label;
-        li.appendChild(a);
     }
-
     footer.appendChild(li);
 });
 
-// Création dynamique du pop-up de contact
-const overlay = document.createElement("div");
-overlay.id = "overlay";
-overlay.style.display = "none";
-overlay.style.position = "fixed";
-overlay.style.top = 0;
-overlay.style.left = 0;
-overlay.style.width = "100%";
-overlay.style.height = "100%";
-overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-overlay.style.zIndex = 999;
+// Création du pop-up de Contact
+const contactOverlay = document.createElement("div");
+contactOverlay.id = "contactOverlay";
+contactOverlay.style.display = "none";
+contactOverlay.style.position = "fixed";
+contactOverlay.style.top = 0;
+contactOverlay.style.left = 0;
+contactOverlay.style.width = "100%";
+contactOverlay.style.height = "100%";
+contactOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+contactOverlay.style.zIndex = 999;
 
-const popupForm = document.createElement("div");
-popupForm.id = "popupForm";
-popupForm.style.display = "none";
-popupForm.style.position = "fixed";
-popupForm.style.top = "50%";
-popupForm.style.left = "50%";
-popupForm.style.transform = "translate(-50%, -50%)";
-popupForm.style.backgroundColor = "white";
-popupForm.style.padding = "20px";
-popupForm.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.3)";
-popupForm.style.zIndex = 1000;
-popupForm.style.width = "300px";
+const contactPopupForm = document.createElement("div");
+contactPopupForm.id = "contactPopupForm";
+contactPopupForm.style.display = "none";
+contactPopupForm.style.position = "fixed";
+contactPopupForm.style.top = "50%";
+contactPopupForm.style.left = "50%";
+contactPopupForm.style.transform = "translate(-50%, -50%)";
+contactPopupForm.style.backgroundColor = "white";
+contactPopupForm.style.padding = "20px";
+contactPopupForm.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.3)";
+contactPopupForm.style.zIndex = 1000;
+contactPopupForm.style.width = "300px";
 
-popupForm.innerHTML = `
-    <span id="closePopupBtn" style="float: right; cursor: pointer; font-size: 1.2em;">&times;</span>
+contactPopupForm.innerHTML = `
+    <span id="closeContactPopupBtn" style="float: right; cursor: pointer; font-size: 1.2em;">&times;</span>
     <form id="contactForm" action="formContact.php" method="POST">
         <label for="pseudo">Pseudo :</label>
         <input type="text" id="pseudo" name="pseudo" required>
@@ -107,31 +102,62 @@ popupForm.innerHTML = `
         <textarea id="avis" name="avis" required></textarea>
         <button type="submit">Envoyer</button>
     </form>
-    <div id="response"></div>
+    <div id="responseContact"></div>
 `;
 
-// Ajout du pop-up et de l'overlay au corps de la page
-document.body.appendChild(overlay);
-document.body.appendChild(popupForm);
+// Ajout du pop-up de Contact et de son overlay au corps de la page
+document.body.appendChild(contactOverlay);
+document.body.appendChild(contactPopupForm);
 
-// Gestion de la fermeture du pop-up
-document.getElementById("closePopupBtn").addEventListener("click", function() {
-    popupForm.style.display = "none";
-    overlay.style.display = "none";
+// Gestion de la fermeture du pop-up de Contact
+document.getElementById("closeContactPopupBtn").addEventListener("click", function() {
+    contactPopupForm.style.display = "none";
+    contactOverlay.style.display = "none";
 });
 
-// Envoi du formulaire via AJAX
-document.getElementById("contactForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
-    const formData = new FormData(this);
+// Création du pop-up de Connexion
+const connexionOverlay = document.createElement("div");
+connexionOverlay.id = "connexionOverlay";
+connexionOverlay.style.display = "none";
+connexionOverlay.style.position = "fixed";
+connexionOverlay.style.top = 0;
+connexionOverlay.style.left = 0;
+connexionOverlay.style.width = "100%";
+connexionOverlay.style.height = "100%";
+connexionOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+connexionOverlay.style.zIndex = 999;
 
-    const response = await fetch('formContact.php', {
-        method: 'POST',
-        body: formData
-    });
+const connexionPopupForm = document.createElement("div");
+connexionPopupForm.id = "connexionPopupForm";
+connexionPopupForm.style.display = "none";
+connexionPopupForm.style.position = "fixed";
+connexionPopupForm.style.top = "50%";
+connexionPopupForm.style.left = "50%";
+connexionPopupForm.style.transform = "translate(-50%, -50%)";
+connexionPopupForm.style.backgroundColor = "white";
+connexionPopupForm.style.padding = "20px";
+connexionPopupForm.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.3)";
+connexionPopupForm.style.zIndex = 1000;
+connexionPopupForm.style.width = "300px";
 
-    const result = await response.json();
-    document.getElementById("response").innerText = result.success 
-        ? "Votre message a été envoyé avec succès." 
-        : result.error || "Une erreur est survenue.";
+connexionPopupForm.innerHTML = `
+    <span id="closeConnexionPopupBtn" style="float: right; cursor: pointer; font-size: 1.2em;">&times;</span>
+    <form id="connexionForm" action="connexion.php" method="POST">
+        <label for="mailConnexion">Pseudo :</label>
+        <input type="text" id="mailConnexion" name="mailConnexion" required>
+        <label for="motDePasse">Mot de passe :</label>
+        <input type="password" id="motDePasse" name="motDePasse" required>
+        <button type="submit">Connexion</button>
+    </form>
+    <div id="responseConnexion"></div>
+`;
+
+// Ajout du pop-up de Connexion et de son overlay au corps de la page
+document.body.appendChild(connexionOverlay);
+document.body.appendChild(connexionPopupForm);
+
+// Gestion de la fermeture du pop-up de Connexion
+document.getElementById("closeConnexionPopupBtn").addEventListener("click", function() {
+    connexionPopupForm.style.display = "none";
+    connexionOverlay.style.display = "none";
 });

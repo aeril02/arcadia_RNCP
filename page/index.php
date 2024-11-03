@@ -8,7 +8,7 @@
     <script src="../source/java/Header_Footer.js" defer></script>
     <script src="../source/java//forIndex/comment_Zoo.js" defer></script>
     <script src="../source/java/forIndex/ajout_comment_Zoo.js" defer></script>
-
+    
 </head>
 <body>
     <!--header_same for all -->
@@ -48,6 +48,13 @@
             </nav>
         </div>
     </aside>
+    <!-- Conteneur de la pop-up vide -->
+<div id="contactPopup" class="popup">
+    <div class="popup-content">
+        <span id="closePopup" class="close-btn">&times;</span>
+        <div id="popupFormContent"></div> <!-- Contenu chargé dynamiquement ici -->
+    </div>
+</div>
     <!-- footer_same for all -->
     <footer>
         <na>

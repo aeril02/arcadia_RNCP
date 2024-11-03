@@ -1,52 +1,42 @@
 <?php
-// Vérification de l'envoi du formulaire
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Charger l'autoload MongoDB
-    require '../../../vendor/autoload.php';
 
-    if (class_exists('MongoDB\Client')) {
-        echo "<p>MongoDB\Client is available.</p>";
+header('Content-Type: application/json');
+
+require '../../vendor/autoload.php';
+
+try {
+    // Connexion MongoDB
+    $mongo = new MongoDB\Client("mongodb://localhost:27017");
+    $collection = $mongo->Arcadia->ContactForms;
+
+    // Sécurisation contre les injections et validation des entrées
+    $pseudo = htmlspecialchars(trim($_POST['pseudo']), ENT_NOQUOTES, 'UTF-8');
+    $avis = htmlspecialchars(trim($_POST['avis']), ENT_NOQUOTES, 'UTF-8');
+    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) 
+             ? htmlspecialchars($_POST['email'], ENT_NOQUOTES, 'UTF-8') 
+             : null; 
+
+    // Vérification des champs non vides et email valide
+    if (!empty($pseudo) && !empty($avis) && !empty($email)) {
+        $commentaire = [
+            'pseudo' => $pseudo,
+            'avis' => $avis,
+            'email' => $email,
+            'date' => (new DateTimeImmutable())->format(DATE_ATOM),
+            'valide' => false
+        ];
+
+        // Insertion dans MongoDB
+        $collection->insertOne($commentaire);
+
+        echo json_encode(['success' => true]);
     } else {
-        echo "<p>MongoDB\Client is NOT available.</p>";
+        // Erreur : champ manquant
+        echo json_encode(['error' => 'Veuillez remplir tous les champs avec un email valide.']);
     }
-    
-
-    // Connexion à MongoDB
-    $client = new MongoDB\Client("mongodb://localhost:27017");
-    $collection = $client->zooArcadia->contactForms;
-
-    // Récupérer les données du formulaire
-    $pseudo = htmlspecialchars(trim($_POST['pseudo']));
-    $avis = htmlspecialchars(trim($_POST['avis']));
-    $email = htmlspecialchars(trim($_POST['email']));
-
-    // Validation des champs pour éviter les injections malveillantes
-    // Vérification de champs vides
-    if (empty($pseudo) || empty($avis) || empty($email)) {
-        echo "<p>Erreur : Tous les champs sont obligatoires.</p>";
-        exit;
-    }
-
-    // Validation des champs pour éviter les injections malveillantes
-    if (!preg_match('/^[a-zA-Z0-9_]{3,20}$/', $pseudo)) {
-        echo "<p>Erreur : Pseudo invalide.</p>";
-        exit;
-    }
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-        echo "<p>Erreur : Email invalide.</p>";
-        exit;
-    }
-
-    $date_creation = new MongoDB\BSON\UTCDateTime((new DateTime())->getTimestamp() * 1000);
-
-    // Insérer les données dans MongoDB
-    $collection->insertOne([
-        'pseudo' => $pseudo,
-        'avis' => $avis,
-        'email' => $email,
-        'date_creation' => $date_creation
-    ]);
-
-    echo "<p>Merci pour votre message ! Nous l'avons bien reçu.</p>";
+} catch (Exception $e) {
+    error_log($e->getMessage());  // Log de l'erreur pour le suivi
+    echo json_encode(['error' => 'Une erreur est survenue.']);  // Message d'erreur générique
 }
+
 ?>

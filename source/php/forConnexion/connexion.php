@@ -11,9 +11,8 @@ header('Content-Type: application/json');
 // Vérifie que la requête est de type POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupère et assainit les données de l'utilisateur
-    $username = filter_input(INPUT_POST, 'mailConnexion', FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, 'motDePasse', FILTER_SANITIZE_STRING);
-
+    $username = filter_input(INPUT_POST, 'mailConnexion', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password = filter_input(INPUT_POST, 'motDePasse', FILTER_SANITIZE_FULL_SPECIAL_CHARS);    
     // Vérifie que les champs ne sont pas vides
     if (!empty($username) && !empty($password)) {
         // Prépare la requête SQL pour vérifier l'utilisateur et récupérer son rôle

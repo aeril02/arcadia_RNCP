@@ -18,29 +18,41 @@ $statement = $pdo->prepare($sql);
 $statement->execute();
 $habitats = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-// Mise à jour de l'état de l'animal
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etat_id'])) {
+// Mise à jour de l'état et ajout du rapport vétérinaire pour l'animal
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etat_id'], $_POST['date'], $_POST['detail'])) {
     $etat_id = $_POST['etat_id'];
     $animal_id = $_POST['animal_id'];
+    $date = $_POST['date'];
+    $detail = $_POST['detail'];
     
-    $sql_update_etat = "UPDATE animal SET etat_id = :etat_id WHERE animal_id = :animal_id";
-    $stmt = $pdo->prepare($sql_update_etat);
-    $stmt->bindParam(':etat_id', $etat_id);
-    $stmt->bindParam(':animal_id', $animal_id);
-    $stmt->execute();
+    try {
+        // Mettre à jour l'état de l'animal
+        $sql_update_etat = "UPDATE animal SET etat_id = :etat_id WHERE animal_id = :animal_id";
+        $stmt = $pdo->prepare($sql_update_etat);
+        $stmt->bindParam(':etat_id', $etat_id);
+        $stmt->bindParam(':animal_id', $animal_id);
+        $stmt->execute();
+
+        // Ajouter un rapport vétérinaire
+        $sql_add_report = "INSERT INTO rapport_veterinaire (animal_id, date, detail, etat_id) VALUES (:animal_id, :date, :detail, :etat_id)";
+        $stmt_report = $pdo->prepare($sql_add_report);
+        $stmt_report->execute([
+            'animal_id' => $animal_id,
+            'date' => $date,
+            'detail' => $detail,
+            'etat_id' => $etat_id
+        ]);
+        echo "<p>Rapport ajouté avec succès pour l'animal.</p>";
+    } catch (PDOException $e) {
+        echo "<p>Erreur lors de la mise à jour : " . htmlspecialchars($e->getMessage()) . "</p>";
+    }
 }
 
-// Mise à jour des commentaires sur l'habitat
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_habitat'])) {
-    $commentaire = $_POST['commentaire_habitat'];
-    $habitat_id = $_POST['habitat_id'];
-    
-    $sql_update_commentaire = "UPDATE habitat SET commentaire_habitat = :commentaire WHERE habitat_id = :habitat_id";
-    $stmt = $pdo->prepare($sql_update_commentaire);
-    $stmt->bindParam(':commentaire', $commentaire);
-    $stmt->bindParam(':habitat_id', $habitat_id);
-    $stmt->execute();
-}
+// Récupérer les états possibles pour le menu déroulant
+$sql_etats = "SELECT * FROM etat";
+$statement_etats = $pdo->prepare($sql_etats);
+$statement_etats->execute();
+$etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_habitat']
     <script src="../source/java/Header_Footer.js" defer></script>
 </head>
 <body>
-    <!--header_same for all -->
     <header>
         <nav>
             <ul id="header"></ul>
@@ -76,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_habitat']
                 </form>
                 
                 <summary>Animaux dans cet habitat</summary>
-                <details class ="animauxHabitat">
+                <details class="animauxHabitat">
                     <?php
                     // Récupération des animaux par habitat avec leur état
                     $habitat_id = $habitat['habitat_id'];
@@ -92,27 +103,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_habitat']
                     foreach ($animaux as $animal): ?>
                         <p><strong><?php echo $animal['prenom']; ?></strong> (État actuel : <?php echo $animal['etat_description']; ?>)</p>
 
-                        <!-- Formulaire de mise à jour de l'état de l'animal -->
+                        <!-- Formulaire de mise à jour de l'état et ajout du rapport vétérinaire -->
                         <form action="" method="POST">
                             <input type="hidden" name="animal_id" value="<?php echo $animal['animal_id']; ?>">
                             <label for="etat_id_<?php echo $animal['animal_id']; ?>">Modifier l'état :</label>
                             <select id="etat_id_<?php echo $animal['animal_id']; ?>" name="etat_id" required>
-                                <?php
-                                // Récupération des états possibles depuis la table etat
-                                $sql_etats = "SELECT * FROM etat";
-                                $statement_etats = $pdo->prepare($sql_etats);
-                                $statement_etats->execute();
-                                $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
-
-                                foreach ($etats as $etat): ?>
+                                <?php foreach ($etats as $etat): ?>
                                     <option value="<?php echo $etat['etat_id']; ?>" <?php echo ($etat['etat_id'] == $animal['etat_id']) ? 'selected' : ''; ?>>
                                         <?php echo $etat['description']; ?>
                                     </option>
                                 <?php endforeach; ?>
-                            </select>
-                            <button type="submit">Mettre à jour l'état</button>
+                            </select><br>
+
+                            <label for="date_<?php echo $animal['animal_id']; ?>">Date du rapport :</label>
+                            <input type="date" id="date_<?php echo $animal['animal_id']; ?>" name="date" required><br>
+
+                            <label for="detail_<?php echo $animal['animal_id']; ?>">Détail du rapport :</label>
+                            <textarea id="detail_<?php echo $animal['animal_id']; ?>" name="detail" required></textarea><br>
+
+                            <button type="submit">Ajouter le rapport</button>
                         </form>
-                        
+
                         <!-- Historique de l'alimentation -->
                         <h4>Historique de l'alimentation de <?php echo $animal['prenom']; ?> :</h4>
                         <details>
@@ -140,11 +151,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_habitat']
         <?php endforeach; ?>
     </main>
 
-    <!-- footer_same for all -->
     <footer>
-        <na>
+        <nav>
             <ul id="footer"></ul>
-        </na>
+        </nav>
     </footer>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 // Inclure la fetch_services.php
-include('fetch_services.php');
+include('../config/fetch_services.php');
 ?>
 <!-- Code HTML pour afficher les données -->
 <main>

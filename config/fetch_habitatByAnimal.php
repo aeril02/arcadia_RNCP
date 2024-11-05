@@ -1,6 +1,6 @@
 <?php
 // Inclure la configuration de la base de données
-include('../config/db_config.php');
+include "db_config.php";
 
 try {
     // Créer une connexion à la base de données

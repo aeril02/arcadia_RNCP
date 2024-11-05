@@ -52,17 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_habitat']
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header>
- <!--header_same for all -->
+    <!--header_same for all -->
+    <header>
         <nav>
-            <ul>
-                <li><img src="photo/logo_arcadia.jpg" alt="logo arcadia"></li>
-                <li><a href="index.php">acceuil</a></li>
-                <li><a href="service.php">Services</a></li>
-                <li><a href="habitats.php">Habitats</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a href="login.php">Connexion</a></li>
-            </ul>
+            <ul id="header"></ul>
         </nav>
     </header>
     
@@ -108,15 +101,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_habitat']
         <?php endforeach; ?>
     </main>
 
+    <!-- footer_same for all -->
     <footer>
-<!--footer_same for all-->
-        <ul>
-            <li>&copy; 2024 Zoo Arcadia - Tous droits réservés</li>
-            <li><a href="legal.html">Mentions légales</a></li>
-            <li><a href="billeterie.html">Billetterie</a></li>
-            <li><a href="reglement.html">Règlement intérieur</a></li>
-            <li><a href="recrutement.html">Recrutement</a></li>
-        </ul>   
+        <na>
+            <ul id="footer"></ul>
+        </na>
     </footer>
 </body>
 </html>

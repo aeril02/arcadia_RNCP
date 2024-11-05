@@ -1,5 +1,5 @@
 <?php
- include "fetch_habitatByAnimal.php";
+ include ('../config/fetch_habitatByAnimal.php');
 ?>
 <!-- Code HTML pour afficher les données -->
 <main>

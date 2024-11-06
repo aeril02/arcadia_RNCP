@@ -1,5 +1,5 @@
 <?php
- include ('../config/fetch_habitatByAnimal.php');
+include('../config/fetch_habitatByAnimal.php');
 ?>
 <!-- Code HTML pour afficher les données -->
 <main>
@@ -8,19 +8,19 @@
             <aside class="photoHabitat">
                 <h2><?php echo htmlspecialchars($habitat['nom']); ?></h2>
                 <figure>
-                        <img src="data:image/webp;base64,<?php echo $habitat['photo']; ?>" alt="Image de <?php echo htmlspecialchars($habitat['nom']); ?>">
-                        <figcaption><?php echo htmlspecialchars($habitat['description']); ?></figcaption>
+                    <img src="data:image/webp;base64,<?php echo $habitat['photo']; ?>" alt="Image de <?php echo htmlspecialchars($habitat['nom']); ?>">
+                    <figcaption><?php echo htmlspecialchars($habitat['description']); ?></figcaption>
                 </figure>
                 <aside class="boutonAnimaux">
                     <?php foreach ($habitat['animaux'] as $animal): ?>
-                            <details  class="boutonAnimal">
-                                <summary><strong><?php echo htmlspecialchars($animal['race']); ?></strong></summary>
-                                <p><strong><?php echo htmlspecialchars($animal['prenom']); ?></strong></p>
-                                <p>État: <?php echo htmlspecialchars($animal['etat']); ?></p>
-                                <?php if ($animal['image']): ?>
-                                    <img src="data:image/webp;base64,<?php echo $animal['image']; ?>" alt="Image de <?php echo htmlspecialchars($animal['prenom']); ?>">
-                                <?php endif; ?> // fin de la condition if
-                            </details>
+                        <details class="boutonAnimal" data-animal-id="<?php echo htmlspecialchars($animal['animal_id']); ?>">
+                            <summary><strong><?php echo htmlspecialchars($animal['race']); ?></strong></summary>
+                            <p><strong><?php echo htmlspecialchars($animal['prenom']); ?></strong></p>
+                            <p>État: <?php echo htmlspecialchars($animal['etat']); ?></p>
+                            <?php if ($animal['image']): ?>
+                                <img src="data:image/webp;base64,<?php echo $animal['image']; ?>" alt="Image de <?php echo htmlspecialchars($animal['prenom']); ?>">
+                            <?php endif; ?>
+                        </details>
                     <?php endforeach; ?>
                 </aside>
             </aside>

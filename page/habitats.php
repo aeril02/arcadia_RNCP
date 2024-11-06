@@ -42,5 +42,19 @@
             <ul id="footer"></ul>
         </nav>
     </footer>
+<script>
+    document.querySelectorAll('.boutonAnimal').forEach((element) => {
+    element.addEventListener('click', () => {
+        const animalId = element.getAttribute('data-animal-id'); // appel la classe animal specifique de <detail> 
+        fetch('../config/update_counter.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ animalId: animalId }),
+        });
+    });
+});
+</script>
 </body>
 </html>

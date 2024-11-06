@@ -7,6 +7,12 @@ require '../vendor/autoload.php';
 $client = new MongoDB\Client("mongodb://localhost:27017");
 $collection = $client->Arcadia->consultations;
 
+// Récupération des consultations pour chaque animal
+$consultations = [];
+$cursor = $collection->find();
+foreach ($cursor as $doc) {
+    $consultations[$doc['animal_id']] = $doc['consultations'];
+}
 
 // Gestion des utilisateurs (ajout uniquement dans ce formulaire)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
@@ -209,8 +215,12 @@ $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Administration du Zoo</title>
+    <link rel="stylesheet" href="../source/css/style.css">
+    <script src="../source/java/Header_Footer.js" defer></script>
+    
 </head>
 <body>
+    <!--header_same for all -->
     <header>
         <nav>
             <ul id="header"></ul>
@@ -421,7 +431,9 @@ $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
 
             <label for="prenom_<?php echo $animal['animal_id']; ?>">Nom :</label>
             <input type="text" id="prenom_<?php echo $animal['animal_id']; ?>" name="prenom" value="<?php echo htmlspecialchars($animal['prenom']); ?>" required>
-     
+            <label>Nombre de consultations :</label>
+            <span><?php echo isset($consultations[$animal['animal_id']]) ? $consultations[$animal['animal_id']] : 0; ?></span>
+
                 <label for="habitat_id_<?php echo $animal['animal_id']; ?>">Habitat :</label>
                 <select id="habitat_id_<?php echo $animal['animal_id']; ?>" name="habitat_id">
                     <?php foreach ($habitats as $habitat): ?>

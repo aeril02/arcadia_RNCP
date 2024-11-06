@@ -15,30 +15,32 @@
         </nav>
     </header>
     <?php include '../source/php/forHabitat/Section.php'; ?>
-  <!--
-      <main>  Création d'un menu pour les différents habitats 
-    <section class="principal"> Encart principal contenant tous les éléments de l'habitat 
-        
-         Zone pour afficher la photo de l'habitat 
-        <div class="photoHabitat">
-             éléments pour interagir avec les animaux de cet habitat 
-            <section class="boutonAnimaux">
-                 Ajoutez ici des boutons ou des liens vers les animaux spécifiques de cet habitat 
+    
+    <!--
+    <main>  Création d'un menu pour les différents habitats 
+        <section class="principal"> Encart principal contenant tous les éléments de l'habitat 
+            
+             Zone pour afficher la photo de l'habitat 
+            <div class="photoHabitat">
+                 éléments pour interagir avec les animaux de cet habitat 
+                <section class="boutonAnimaux">
+                     Ajoutez ici des boutons ou des liens vers les animaux spécifiques de cet habitat 
+                </section>
+            </div>
+            
+             Section pour afficher les commentaires relatifs à l'habitat 
+            <section class="commentaireHabitat">
+                 Contenu des commentaires ou espace pour affichage dynamique 
             </section>
-        </d>
-        
-         Section pour afficher les commentaires relatifs à l'habitat 
-        <section class="commentaireHabitat">
-             Contenu des commentaires ou espace pour affichage dynamique 
-        </section>
-        
-    </section> 
-</main> -->
+            
+        </section> 
+    </main>
+    -->
 
     <footer>
-    <na>
+        <nav>
             <ul id="footer"></ul>
-    </na>
+        </nav>
     </footer>
 </body>
 </html>

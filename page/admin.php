@@ -100,10 +100,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Récupérer les animaux
-// Récupérer les animaux
-$sql_animaux = "SELECT animal.animal_id, animal.prenom, animal.etat, animal.habitat_id, habitat.nom AS habitat_nom 
+$sql_animaux = "SELECT animal.animal_id, 
+                       animal.prenom, 
+                       animal.etat_id, 
+                       animal.habitat_id, 
+                       habitat.nom AS habitat_nom, 
+                       etat.description AS etat_description, 
+                       race.label AS race_label
                 FROM animal
-                LEFT JOIN habitat ON animal.habitat_id = habitat.habitat_id";
+                LEFT JOIN habitat ON animal.habitat_id = habitat.habitat_id
+                LEFT JOIN etat ON animal.etat_id = etat.etat_id
+                LEFT JOIN race ON animal.race_id = race.race_id";
+
 $statement_animaux = $pdo->prepare($sql_animaux);
 $statement_animaux->execute();
 $animaux = $statement_animaux->fetchAll(PDO::FETCH_ASSOC);
@@ -117,11 +125,41 @@ $statement_habitats = $pdo->prepare($sql_habitats);
 $statement_habitats->execute();
 $habitats = $statement_habitats->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupérer tous les états pour le menu déroulant
+// Récupérer les races pour le menu déroulant
+$sql_races = "SELECT * FROM race";
+$statement_races = $pdo->prepare($sql_races);
+$statement_races->execute();
+$races = $statement_races->fetchAll(PDO::FETCH_ASSOC);
+
+// Récupérer les états pour le menu déroulant
 $sql_etats = "SELECT * FROM etat";
 $statement_etats = $pdo->prepare($sql_etats);
 $statement_etats->execute();
 $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_animal'])) {
+    // Récupération des données du formulaire
+    $prenom = $_POST['prenom'];
+    $etat_id = $_POST['etat_id'];
+    $race_id = $_POST['race_id'];
+    $habitat_id = $_POST['habitat_id'];
+    $image = null;
+
+    // Gestion de l'image
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        $image = file_get_contents($_FILES['image']['tmp_name']);
+    }
+
+    // Insertion du nouvel animal
+    $stmt = $pdo->prepare("INSERT INTO animal (prenom, etat_id, race_id, habitat_id, image) VALUES (?, ?, ?, ?, ?)");
+    $stmt->execute([$prenom, $etat_id, $race_id, $habitat_id, $image]);
+
+    if ($stmt) {
+        echo "L'animal a été ajouté avec succès.";
+    } else {
+        echo "Erreur lors de l'ajout de l'animal.";
+    }
+}
 
 // Gestion de la mise à jour et suppression d'un animal
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -334,17 +372,56 @@ $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
 
 
 <section class="gestion_animaux">
+
+    <h3>Ajouter un nouvel animal</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="prenom">Nom :</label>
+            <input type="text" id="prenom" name="prenom" required>
+
+            <label for="etat_id">État :</label>
+            <select id="etat_id" name="etat_id" required>
+                <?php foreach ($etats as $etat): ?>
+                    <option value="<?php echo $etat['etat_id']; ?>">
+                        <?php echo htmlspecialchars($etat['description']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="race_id">Race :</label>
+            <select id="race_id" name="race_id" required>
+                <?php foreach ($races as $race): ?>
+                    <option value="<?php echo $race['race_id']; ?>">
+                        <?php echo htmlspecialchars($race['label']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="habitat_id">Habitat :</label>
+            <select id="habitat_id" name="habitat_id" required>
+                <?php foreach ($habitats as $habitat): ?>
+                    <option value="<?php echo $habitat['habitat_id']; ?>">
+                        <?php echo htmlspecialchars($habitat['nom']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="image">Image :</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <button type="submit" name="add_animal">Créer l'animal</button>
+        </form>
     <h2>Gestion des Animaux</h2>
+    
     <h3>Liste des Animaux</h3>
     
     <?php foreach ($animals as $animal): ?>
         <div>
-            <form method="POST" action="admin.php">
-                <input type="hidden" name="animal_id" value="<?php echo $animal['animal_id']; ?>">
+        <form method="POST" action="admin.php">
+            <input type="hidden" name="animal_id" value="<?php echo $animal['animal_id']; ?>">
 
-                <label for="prenom_<?php echo $animal['animal_id']; ?>">Nom :</label>
-                <input type="text" id="prenom_<?php echo $animal['animal_id']; ?>" name="prenom" value="<?php echo htmlspecialchars($animal['prenom']); ?>" required>
-                
+            <label for="prenom_<?php echo $animal['animal_id']; ?>">Nom :</label>
+            <input type="text" id="prenom_<?php echo $animal['animal_id']; ?>" name="prenom" value="<?php echo htmlspecialchars($animal['prenom']); ?>" required>
+     
                 <label for="habitat_id_<?php echo $animal['animal_id']; ?>">Habitat :</label>
                 <select id="habitat_id_<?php echo $animal['animal_id']; ?>" name="habitat_id">
                     <?php foreach ($habitats as $habitat): ?>
@@ -354,17 +431,7 @@ $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
                         </option>
                     <?php endforeach; ?>
                 </select>
-
-                <label for="etat_id_<?php echo $animal['animal_id']; ?>">État :</label>
-                <select id="etat_id_<?php echo $animal['animal_id']; ?>" name="etat_id" required>
-                    <?php foreach ($etats as $etat): ?>
-                        <option value="<?php echo $etat['etat_id']; ?>" 
-                            <?php echo (isset($animal['etat_id']) && $animal['etat_id'] == $etat['etat_id']) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($etat['description']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                                
+             
                 <button type="submit" name="update_animal">Mettre à jour</button>
                 <button type="submit" name="delete_animal" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet animal ?');">Supprimer</button>
             </form>

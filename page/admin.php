@@ -216,6 +216,8 @@ $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <title>Administration du Zoo</title>
     <link rel="stylesheet" href="../source/css/style.css">
+    <link rel="stylesheet" href="../source/css/header_footer.css">
+    <link rel="stylesheet" href="../source/css/forPage.css">
     <script src="../source/java/Header_Footer.js" defer></script>
     
 </head>
@@ -226,7 +228,7 @@ $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
             <ul id="header"></ul>
         </nav>
     </header>
-
+<main>
 <h1>Administration du Zoo</h1>
 
 
@@ -562,6 +564,7 @@ $etats = $statement_etats->fetchAll(PDO::FETCH_ASSOC);
         </ul>
     </div>
 </section>
+</main>
     <footer>
         <na>
             <ul id="footer"></ul>

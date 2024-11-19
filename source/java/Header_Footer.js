@@ -5,36 +5,49 @@ const menuItems = [
     { href: "habitats.php", label: "Habitats" }
 ];
 const currentPath = window.location.pathname;
-const menu = document.getElementById("header");
+const headerContainer = document.getElementById("header");
 
-// Ajout du logo
+// Création d'un conteneur principal pour le logo et la navigation
+const navContainer = document.createElement("div");
+navContainer.classList.add("navContainer");
+
+// Ajout du logo dans le conteneur principal
 const logo = document.createElement("img");
 logo.src = "../doc/photo/image_site/logo_arcadia_WEBP.webp";
 logo.alt = "logo_du_site";
 logo.classList.add("logoArcadia");
-menu.appendChild(logo);
+navContainer.appendChild(logo); // Le logo est ajouté au conteneur principal
 
-// Création du menu de navigation
+// Création du conteneur de navigation (liste des liens)
+const navList = document.createElement("ul");
+navList.classList.add("navList");
+
+// Création des éléments du menu de navigation
 menuItems.forEach(item => {
     const li = document.createElement("li");
     li.classList.add("navHeader");
+
     const a = document.createElement("a");
     a.classList.add("texteHeader");
     a.href = item.href;
     a.textContent = item.label;
 
-    if (currentPath.includes(item.href.split("/").pop())) {
-        a.classList.add("active");
+    if (currentPath.endsWith(item.href)) {
+        a.classList.add("active"); // Marque l'élément actif
     }
 
     li.appendChild(a);
-    menu.appendChild(li);
+    navList.appendChild(li);
 });
+
+// Ajout de la liste de navigation au conteneur principal
+navContainer.appendChild(navList);
+headerContainer.appendChild(navContainer); // Ajout du conteneur principal au header
 
 // Pied de page pour les pages du site
 const footerItems = [
-    { type: "button", id: "openPopupBtn", label: "Contactez-nous" },
-    { type: "button", id: "openConnexionBtn", label: "Connexion" },
+    { type: "button", id: "openContactPopup", label: "Contactez-nous" },
+    { type: "button", id: "openConnexionPopup", label: "Connexion" },
 ];
 const footer = document.getElementById("footer");
 
@@ -49,16 +62,11 @@ footerItems.forEach(item => {
         button.textContent = item.label;
         button.classList.add("texteFooter");
 
-        if (item.id === "openPopupBtn") {
-            button.addEventListener("click", () => {
-                document.getElementById("contactOverlay").style.display = "block";
-                document.getElementById("contactPopupForm").style.display = "block";
-            });
-        } else if (item.id === "openConnexionBtn") {
-            button.addEventListener("click", () => {
-                document.getElementById("connexionOverlay").style.display = "block";
-                document.getElementById("connexionPopupForm").style.display = "block";
-            });
+        // Ajout des événements pour ouvrir les pop-ups
+        if (item.id === "openContactPopup") {
+            button.addEventListener("click", () => showPopup(contactPopupForm, contactOverlay));
+        } else if (item.id === "openConnexionPopup") {
+            button.addEventListener("click", () => showPopup(connexionPopupForm, connexionOverlay));
         }
 
         li.appendChild(button);
@@ -66,33 +74,27 @@ footerItems.forEach(item => {
     footer.appendChild(li);
 });
 
-// Création du pop-up de Contact
+// Fonctions d'affichage et de fermeture des pop-ups
+function showPopup(popup, overlay) {
+    popup.style.display = "block";
+    overlay.style.display = "block";
+}
+
+function closePopup(popup, overlay) {
+    popup.style.display = "none";
+    overlay.style.display = "none";
+}
+
+// Création du pop-up de Contact et de son overlay
 const contactOverlay = document.createElement("div");
 contactOverlay.id = "contactOverlay";
-contactOverlay.style.display = "none";
-contactOverlay.style.position = "fixed";
-contactOverlay.style.top = 0;
-contactOverlay.style.left = 0;
-contactOverlay.style.width = "100%";
-contactOverlay.style.height = "100%";
-contactOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-contactOverlay.style.zIndex = 999;
+contactOverlay.className = "overlay";
 
 const contactPopupForm = document.createElement("div");
 contactPopupForm.id = "contactPopupForm";
-contactPopupForm.style.display = "none";
-contactPopupForm.style.position = "fixed";
-contactPopupForm.style.top = "50%";
-contactPopupForm.style.left = "50%";
-contactPopupForm.style.transform = "translate(-50%, -50%)";
-contactPopupForm.style.backgroundColor = "white";
-contactPopupForm.style.padding = "20px";
-contactPopupForm.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.3)";
-contactPopupForm.style.zIndex = 1000;
-contactPopupForm.style.width = "300px";
-
+contactPopupForm.className = "popupForm";
 contactPopupForm.innerHTML = `
-    <span id="closeContactPopupBtn" style="float: right; cursor: pointer; font-size: 1.2em;">&times;</span>
+    <span id="closeContactPopupBtn" class="closeBtn">&times;</span>
     <form id="contactForm" action="formContact.php" method="POST">
         <label for="pseudo">Pseudo :</label>
         <input type="text" id="pseudo" name="pseudo" required>
@@ -105,43 +107,24 @@ contactPopupForm.innerHTML = `
     <div id="responseContact"></div>
 `;
 
-// Ajout du pop-up de Contact et de son overlay au corps de la page
+// Ajout au corps de la page
 document.body.appendChild(contactOverlay);
 document.body.appendChild(contactPopupForm);
 
-// Gestion de la fermeture du pop-up de Contact
-document.getElementById("closeContactPopupBtn").addEventListener("click", function() {
-    contactPopupForm.style.display = "none";
-    contactOverlay.style.display = "none";
-});
+// Événements de fermeture pour le pop-up de Contact
+document.getElementById("closeContactPopupBtn").addEventListener("click", () => closePopup(contactPopupForm, contactOverlay));
+contactOverlay.addEventListener("click", () => closePopup(contactPopupForm, contactOverlay));
 
-// Création du pop-up de Connexion
+// Création du pop-up de Connexion et de son overlay
 const connexionOverlay = document.createElement("div");
 connexionOverlay.id = "connexionOverlay";
-connexionOverlay.style.display = "none";
-connexionOverlay.style.position = "fixed";
-connexionOverlay.style.top = 0;
-connexionOverlay.style.left = 0;
-connexionOverlay.style.width = "100%";
-connexionOverlay.style.height = "100%";
-connexionOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-connexionOverlay.style.zIndex = 999;
+connexionOverlay.className = "overlay";
 
 const connexionPopupForm = document.createElement("div");
 connexionPopupForm.id = "connexionPopupForm";
-connexionPopupForm.style.display = "none";
-connexionPopupForm.style.position = "fixed";
-connexionPopupForm.style.top = "50%";
-connexionPopupForm.style.left = "50%";
-connexionPopupForm.style.transform = "translate(-50%, -50%)";
-connexionPopupForm.style.backgroundColor = "white";
-connexionPopupForm.style.padding = "20px";
-connexionPopupForm.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.3)";
-connexionPopupForm.style.zIndex = 1000;
-connexionPopupForm.style.width = "300px";
-
+connexionPopupForm.className = "popupForm";
 connexionPopupForm.innerHTML = `
-    <span id="closeConnexionPopupBtn" style="float: right; cursor: pointer; font-size: 1.2em;">&times;</span>
+    <span id="closeConnexionPopupBtn" class="closeBtn">&times;</span>
     <form id="connexionForm" action="connexion.php" method="POST">
         <label for="mailConnexion">Pseudo :</label>
         <input type="text" id="mailConnexion" name="mailConnexion" required>
@@ -152,12 +135,10 @@ connexionPopupForm.innerHTML = `
     <div id="responseConnexion"></div>
 `;
 
-// Ajout du pop-up de Connexion et de son overlay au corps de la page
+// Ajout au corps de la page
 document.body.appendChild(connexionOverlay);
 document.body.appendChild(connexionPopupForm);
 
-// Gestion de la fermeture du pop-up de Connexion
-document.getElementById("closeConnexionPopupBtn").addEventListener("click", function() {
-    connexionPopupForm.style.display = "none";
-    connexionOverlay.style.display = "none";
-});
+// Événements de fermeture pour le pop-up de Connexion
+document.getElementById("closeConnexionPopupBtn").addEventListener("click", () => closePopup(connexionPopupForm, connexionOverlay));
+connexionOverlay.addEventListener("click", () => closePopup(connexionPopupForm, connexionOverlay));

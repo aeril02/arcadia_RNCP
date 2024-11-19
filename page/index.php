@@ -5,28 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
     <link rel="stylesheet" href="../source/css/style.css">
+    <link rel="stylesheet" href="../source/css/header_footer.css">
+    <link rel="stylesheet" href="../source/css/forPage.css">
     <script src="../source/java/Header_Footer.js" defer></script>
-    <script src="../source/java//forIndex/comment_Zoo.js" defer></script>
+    <script src="../source/java/forIndex/comment_Zoo.js" defer></script>
     <script src="../source/java/forIndex/ajout_comment_Zoo.js" defer></script>
     
 </head>
 <body>
     <!--header_same for all -->
     <header>
-        <nav>
-            <ul id="header"></ul>
-        </nav>
+        <div>
+            <p id="header"></p>
+        </div>
     </header>
         
        <!-- presentation du Zoo--> 
-    <main>
+    <main id= "mainIndex">
         <h1 id="tittleIndex">Presentation du ZOO </h1>
         <section id ="presentationZooIndex">
             <?php include "../source/php/forIndex/presentation_Zoo.php"; ?>
         </section>
     </main>
 
-    <aside>
+    <aside id="asideIndex">
         <!--formulaire pour ajouter des commentaire a mongodb -->
         <details id="detailsComZooIndex">
             <summary>laisser un avis sur notre ZOO</summary>
@@ -57,9 +59,9 @@
 </div>
     <!-- footer_same for all -->
     <footer>
-        <na>
+        <nav>
             <ul id="footer"></ul>
-        </na>
+        </nav>
     </footer>
 </body>
 </html>

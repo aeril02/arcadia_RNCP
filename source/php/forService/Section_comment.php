@@ -8,7 +8,7 @@ $services = getServices($pdo);
 ?>
 
 <!-- Code HTML pour afficher les données -->
-<main>
+<main id="servicesMain">
     <?php if (!empty($services)): ?>
         <?php foreach ($services as $item): ?>
             <section class="principal">

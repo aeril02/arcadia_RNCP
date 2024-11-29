@@ -1,4 +1,4 @@
-// En-tête pour les pages du site
+// En-tête pour les pages du site DEBUT DU HEADER 
 const menuItems = [
     { href: "index.php", label: "Accueil" },
     { href: "service.php", label: "Services" },
@@ -44,7 +44,8 @@ menuItems.forEach(item => {
 navContainer.appendChild(navList);
 headerContainer.appendChild(navContainer); // Ajout du conteneur principal au header
 
-// Pied de page pour les pages du site
+
+// Pied de page pour les pages du site DEBUT DU FOOTER 
 const footerItems = [
     { type: "button", id: "openContactPopup", label: "Contactez-nous" },
     { type: "button", id: "openConnexionPopup", label: "Connexion" },
@@ -62,7 +63,7 @@ footerItems.forEach(item => {
         button.textContent = item.label;
         button.classList.add("texteFooter");
 
-        // Ajout des événements pour ouvrir les pop-ups
+        // Ajout des éléments pour ouvrir les pop-ups
         if (item.id === "openContactPopup") {
             button.addEventListener("click", () => showPopup(contactPopupForm, contactOverlay));
         } else if (item.id === "openConnexionPopup") {
@@ -111,7 +112,7 @@ contactPopupForm.innerHTML = `
 document.body.appendChild(contactOverlay);
 document.body.appendChild(contactPopupForm);
 
-// Événements de fermeture pour le pop-up de Contact
+// Éléments de fermeture pour le pop-up de Contact
 document.getElementById("closeContactPopupBtn").addEventListener("click", () => closePopup(contactPopupForm, contactOverlay));
 contactOverlay.addEventListener("click", () => closePopup(contactPopupForm, contactOverlay));
 
@@ -134,7 +135,31 @@ connexionPopupForm.innerHTML = `
     </form>
     <div id="responseConnexion"></div>
 `;
+// Écouteur pour la soumission du formulaire de connexion
+document.getElementById("connexionForm").addEventListener("submit", async (e) => {
+    e.preventDefault(); // Empêche le rechargement de la page
 
+    const formData = new FormData(e.target);
+
+    try {
+        const response = await fetch("../source/php/forConnexion/connexion.php", {
+            method: "POST",
+            body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.status === "success") {
+            alert(result.message);
+            window.location.href = result.redirect;
+        } else {
+            document.getElementById("responseConnexion").textContent = result.message;
+        }
+    } catch (error) {
+        console.error("Erreur :", error);
+        alert("Une erreur est survenue.");
+    }
+});
 // Ajout au corps de la page
 document.body.appendChild(connexionOverlay);
 document.body.appendChild(connexionPopupForm);

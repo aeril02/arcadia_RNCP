@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $dbname = 'arcadia';
-$username = 'root';
-$password = '';
+$username = 'arcadia-user';
+$password = 'azerty123';
 
 try {
     $pdo = new PDO(

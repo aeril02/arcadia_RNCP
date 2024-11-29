@@ -48,7 +48,7 @@
     document.querySelectorAll('.boutonAnimal').forEach((element) => {
     element.addEventListener('click', () => {
         const animalId = element.getAttribute('data-animal-id'); // appel la classe animal specifique de <detail> 
-        fetch('../config/update_counter.php', {
+        fetch('../config/update_compteur.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

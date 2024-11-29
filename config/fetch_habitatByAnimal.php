@@ -33,7 +33,7 @@ try {
 
     $stmt->execute();
 
-    // Parcourir les résultats pour structurer les données pour l'affichage
+    // Parcourir les résultats pour structure les données pour l'affichage
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $habitat_id = $row['habitat_id'];
         

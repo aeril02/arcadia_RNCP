@@ -2,6 +2,15 @@
 // admin.php
 include('../config/db_config.php');
 
+session_start(); // Démarre la session
+
+// Vérifie si l'utilisateur est connecté et s'il a le rôle d'admin
+if (!isset($_SESSION['role_id']) || $_SESSION['role_id'] != 1) {
+    // affiche un message d'erreur
+    echo "Vous n'êtes pas autorisé à accéder à cette page.";
+    exit(); // Arrête l'exécution du script
+}
+
 // Connexion à MongoDB
 require '../vendor/autoload.php';
 $client = new MongoDB\Client("mongodb://localhost:27017");
